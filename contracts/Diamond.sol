@@ -3,6 +3,25 @@ pragma solidity ^0.8.0;
 
 import { IDiamond } from "./interfaces/IDiamond.sol";
 
+/*
+
+    +------------------------------------+
+    |           Diamond.sol              |
+    +------------------------------------+
+                 /|\           
+                  | msg.sig (function selector)
+                  |
+        +---------+--------------------+-------------------------+
+        |                              |                         |
+  +----------------------+      +-------------------+   +--------------------+
+  | OwnershipFacet       |      | TokenFacet        |  | OtherFacet (future) |
+  +----------------------+      +-------------------+   +--------------------+
+  | - transferOwnership()|      | - mint()          |  | - someOtherFunc()   |
+  | - getOwner()         |      | - transfer()      |  | - etc...            |
+  +-----------------------+     | - balanceOf()     |  +---------------------+
+                                +-------------------+
+*/
+
 contract Diamond {
     // A mapping to store which facet handles which function selectors
     mapping(bytes4 => address) public facets;
